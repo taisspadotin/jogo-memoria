@@ -1,5 +1,4 @@
-$background: #dca39f;
-$bg-game: #acebe8;
+$base: #dca39f;
 @mixin center{
 	display: flex;
 	align-items: center;
@@ -7,19 +6,23 @@ $bg-game: #acebe8;
 }
 
 .intro{
-	background: #f1f1f1;
+	background: #272727;
 	min-height: 100vh;
 	@include center;
 	.i-1{
-		background: $background;
+		background: $base;
 		min-width: 50%;
 		min-height: 50%;
 		border-radius: 5px;
-		border: 2px solid darken($background, 40%);
+		/*border: 2px solid darken($base, 40%);*/
 		padding-bottom: 20px;
 		h1{
 			text-align: center;
-			color: darken($background, 40%);
+			/*color: darken($base, 40%);*/
+			/*color: $base;
+			text-shadow: 2px 2px #80342f;*/
+			color: #fff;
+			font-weight: bold;
 		}
 		.image{
 			width: 100%;
@@ -31,16 +34,17 @@ $bg-game: #acebe8;
 		.btn{
 			border-radius: 5px;
 			border: 0;
-			background: darken($background, 25%);
-			color: #dcdcdc;
+			background: darken($base, 20%);
+			color: #fff;
 			min-height: 40px;
 			min-width: 150px;
 			font-size: 1.1rem;
-			border: 2px solid darken($background, 40%);
+			/*border: 2px solid darken($base, 40%);*/
 			cursor: pointer;
+			min-width: 600px;
 			&:hover{
-				border: 2px solid darken($background, 25%);
-				background: darken($background, 40%);
+				/*border: 2px solid darken($base, 25%);*/
+				background: darken($base, 30%);
 				color: #fff;
 			
 			}
@@ -48,16 +52,17 @@ $bg-game: #acebe8;
 
 	}
 	.i-2{
-			background: $bg-game;
+			background: $base;
 			min-width: 50%;
-			min-height: 50%;
+			min-height: 60vh;
 			border-radius: 5px;
-			border: 2px solid darken($bg-game, 40%);
 			padding-bottom: 20px;
 			.game{
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				margin-top: 20px;
+				margin-bottom: auto;
 				.bloc{
 					background: #c0c0c0;
 					width: 50px;

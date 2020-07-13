@@ -9,7 +9,7 @@ export default class Home extends Component{
 					<div className="i-1">
 						<h1>Ajude o gatinho a encontrar seus amigos</h1>
 						<div className="image">
-							<img src={require('../img/cat1.png')}/>
+							<img src={require('../img/f3.gif')}/>
 						</div>
 						<br/><br/>
 						<div className="center">

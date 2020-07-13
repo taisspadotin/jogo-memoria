@@ -35,12 +35,20 @@ export default class Game extends Component{
 
 			//alterando os que ja foram acertados
 			if(i >= fator){
-				this.btnM1[i-fator].style.background = 'green';
-				this.btnM2[i-fator].style.background = 'green';
+				this.btnM1[i-fator].style.background = '#555555';
+				this.btnM2[i-fator].style.background = '#555555';
+				/*this.btnM1[i-fator].style.display = 'none';
+				this.btnM2[i-fator].style.display = 'none';	*/
 			}
 			else{
-				this.btnM1[i].style.background = 'green';
-				this.btnM2[i].style.background = 'green';
+				this.btnM1[i].style.background = '#555555';
+				this.btnM2[i].style.background = '#555555';
+				/*this.btnM1[i].style.display = 'none';
+				this.btnM2[i].style.display = 'none';*/
+			}
+
+			if(hit.length === (game.length*2)){ //A PESSOA ACERTOU TODAS
+				alert('fim');
 			}
 		
 		}
@@ -117,7 +125,7 @@ export default class Game extends Component{
 		//show.push(</div></div>);
 		return(
 				<div className="intro">
-					<div className="i-2" style={{background: '#acebe8'}}>
+					<div className="i-2">
 						<div className="game">
 								{show}
 						</div>	

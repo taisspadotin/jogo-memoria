@@ -13,7 +13,7 @@ export default class Home extends Component{
 						</div>
 						<br/><br/>
 						<div className="center">
-							<Link to='/game'>
+							<Link to='/game' style={{width: '100%'}}>
 								<button className="btn">Vamos lá</button>
 							</Link>
 						</div>

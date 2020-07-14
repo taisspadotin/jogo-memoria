@@ -19,13 +19,14 @@ export default class Game extends Component{
 	state = {
 			img: '',
 			id: '', 
-			game: [{path: require('../img/cat2.png'), op: 'a'}, {path: require('../img/cat3.png'), op: 'b'}],
-			hit: []
+			game: [{path: require('../img/cat2.png')}, {path: require('../img/cat3.png')}, {path: require('../img/cat4.png')}],
+			hit: [],
+			end: false,
+			fator: 10000
 		};
 
 	click = (i) =>{
-		const game = this.state.game;
-		const fator = 10000;
+		const {game, fator} = this.state;
 		if(this.state.id === (i-fator) || (this.state.id-fator) === i){//caso tenha acertado
 			
 			let hit = this.state.hit;
@@ -33,22 +34,19 @@ export default class Game extends Component{
 			hit.push(i);
 			this.setState({hit});
 
+
 			//alterando os que ja foram acertados
 			if(i >= fator){
 				this.btnM1[i-fator].style.background = '#555555';
 				this.btnM2[i-fator].style.background = '#555555';
-				/*this.btnM1[i-fator].style.display = 'none';
-				this.btnM2[i-fator].style.display = 'none';	*/
 			}
 			else{
 				this.btnM1[i].style.background = '#555555';
 				this.btnM2[i].style.background = '#555555';
-				/*this.btnM1[i].style.display = 'none';
-				this.btnM2[i].style.display = 'none';*/
 			}
 
 			if(hit.length === (game.length*2)){ //A PESSOA ACERTOU TODAS
-				alert('fim');
+				this.setState({end: true});
 			}
 		
 		}
@@ -60,9 +58,7 @@ export default class Game extends Component{
 			this.setState({img, id});
 		}
 		else{
-			//const game = this.state.game;
 			let v = (i-fator);
-			//console.log(v);
 			let img = <img src={game[v].path}/>;
 			let id = i;
 			this.setState({img, id});	
@@ -75,10 +71,7 @@ export default class Game extends Component{
 	}
 	
 	criaRes = (i) => {
-		let id = this.state.id;
-		let hit = this.state.hit;
-		const game = this.state.game;
-		let fator = 10000;
+		let {id, hit, game, fator} = this.state;
 
 		if(id === i)
 		{
@@ -87,7 +80,8 @@ export default class Game extends Component{
 		else if(hit.indexOf(i) === 0)
 		{
 			if(i >= fator){
-				return game[fator-i].img;
+				let v = i-fator;
+				return game[v].img;
 			}
 			else{
 				return game[i].img;
@@ -102,7 +96,7 @@ export default class Game extends Component{
 		let show = [];
 		let id = this.state.id;
 		let size = game.length;
-		let fator = 10000;
+		let fator = this.state.fator;
 		let hit = this.state.hit;
 		//console.log(hit);
 
@@ -126,9 +120,16 @@ export default class Game extends Component{
 		return(
 				<div className="intro">
 					<div className="i-2">
-						<div className="game">
+						{this.state.end === false ? <div className="game">
 								{show}
-						</div>	
+						</div> : 
+						<div className="end">
+						{/*<h3>Muito obrigado por ajudar o gatinho a encontrar seus amigos</h3>*/}
+						<div class="neons col-12">
+				         <h1><em>Muito obrigado por ajudar o gatinho a encontrar seus amigos</em></h1>
+				      </div>
+						<img src={require('../img/f4.gif')}/>
+						</div>}
 					</div>
 				</div>
 				)

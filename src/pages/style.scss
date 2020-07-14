@@ -1,4 +1,6 @@
 $base: #dca39f;
+/*$neon: darken($base, 20%);*/
+$neon: #48a5d1;
 @mixin center{
 	display: flex;
 	align-items: center;
@@ -11,11 +13,18 @@ $base: #dca39f;
 	@include center;
 	.i-1{
 		background: $base;
-		min-width: 50%;
+		width: 50%;
 		min-height: 50%;
 		border-radius: 5px;
 		/*border: 2px solid darken($base, 40%);*/
 		padding-bottom: 20px;
+		@media only screen and (max-width: 600px)  {
+			margin-left: 10px;
+			margin-right: 10px;
+			padding-left: 5px;
+			padding-right: 5px;
+			width: 90%;
+		}
 		h1{
 			text-align: center;
 			/*color: darken($base, 40%);*/
@@ -41,22 +50,29 @@ $base: #dca39f;
 			font-size: 1.1rem;
 			/*border: 2px solid darken($base, 40%);*/
 			cursor: pointer;
-			min-width: 600px;
+			width: 90%;
+			
+
 			&:hover{
 				/*border: 2px solid darken($base, 25%);*/
 				background: darken($base, 30%);
 				color: #fff;
 			
 			}
+
+			
 		}
 
 	}
 	.i-2{
 			background: $base;
-			min-width: 50%;
+			width: 50%;
 			min-height: 60vh;
 			border-radius: 5px;
-			padding-bottom: 20px;
+			padding: 5px;
+			@media only screen and (max-width: 600px)  {
+				width: 90%;
+			}
 			.game{
 				display: flex;
 				align-items: center;
@@ -76,9 +92,47 @@ $base: #dca39f;
 					}
 				}
 			}
+			.end{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				
+				h3{
+					
+				}
+				h1{
+				  color: #dfe1e5;
+				  font-size: 1.4rem;
+				  text-align: center;
+				  font-size: 1.8rem;
+				  -webkit-animation: glow 2s ease-in-out infinite alternate;
+				  -moz-animation: glow 2s ease-in-out infinite alternate;
+				  animation: glow 2s ease-in-out infinite alternate;
+				  
+				}
+				@keyframes glow {
+					from {
+					    color: #fff;
+					    text-shadow: 0 0 5px $neon, 0 0 10px $neon, 0 0 15px $neon, 0 0 20px $neon, 0 0 25px $neon, 0 0 30px $neon, 0 0 35px $neon, 0 0 40px $neon;
+					}
+					to {
+					    color: #dfe1e5;
+					    text-shadow: 0 0 10px $neon, 0 0 15px $neon, 0 0 20px $neon, 0 0 25px $neon, 0 0 30px $neon, 0 0 35px $neon, 0 0 40px $neon, 0 1 45px $neon;
+					}
+				}
+				
+				img{
+					width: 200px;
+					margin-top: 50px;
+				}
+			}
 			
 		}	
 }
+
+
+
 
 .center{
 	@include center;

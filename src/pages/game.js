@@ -19,10 +19,12 @@ export default class Game extends Component{
 	state = {
 			img: '',
 			id: '', 
-			game: [{path: require('../img/cat2.png')}, {path: require('../img/cat3.png')}, {path: require('../img/cat4.png')}],
+			game: [{path: require('../img/cat2.png')}, {path: require('../img/cat3.png')}, {path: require('../img/cat4.png')}, {path: require('../img/cat5.png')}, {path: require('../img/cat6.png')}, {path: require('../img/cat7.png')}],
 			hit: [],
 			end: false,
-			fator: 10000
+			fator: 10000,
+			heart: '',
+			rd: []
 		};
 
 	click = (i) =>{
@@ -66,8 +68,22 @@ export default class Game extends Component{
 		
 	}
 	
-	componentDidMount = () =>{
+	componentDidMount = () => {
+		const {fator, game} = this.state;
+		let rd = [];
+		let cont = [];
+		let i=0
 		
+		while(i< game.length){
+			let j = Math.floor(Math.random() * game.length + 0); //gera num aleatorio de 0 ate o fator
+			//console.log(j);
+			//console.log(cont.indexOf(j));
+			if(cont.indexOf(j) < 0){
+				cont.push(j);
+				i++;
+			}
+		}
+		this.setState({rd: cont});
 	}
 	
 	criaRes = (i) => {
@@ -90,46 +106,60 @@ export default class Game extends Component{
 							
 	}
 
+	coracao = () => {
+		if(this.state.heart !== ''){
+			this.setState({heart: ''});
+		}
+		else{
+			this.setState({heart: <img className="coracoes" src={require('../img/coracoes.gif')}/>});
+		}	
+	}
+
 	render(){
-		const game = this.state.game;
-		//console.log(game);
+		let {heart, game, id, fator, hit, rd} = this.state;
 		let show = [];
-		let id = this.state.id;
 		let size = game.length;
-		let fator = this.state.fator;
-		let hit = this.state.hit;
 		//console.log(hit);
+		
 
 		for(let i=0; i<size; i++){ 
 			show.push(
+					<div className="col-4">
 						<button ref={this.setRefbtnM1} className="bloc" onClick={()=>this.click(i)} disabled={hit.indexOf(i) === 0 ? true : false}>
 							{this.criaRes(i)}
 						</button>
-						
+					</div>	
 				);
 		}
-		for(let i=0; i<size; i++){ 
+		//Math.floor(Math.random() * 10 + 0)
+		//let rand = [];
+		//console.log(this.state.rd);
+		for(let i=0; i<rd.length; i++){ 
 			show.push(
-					<button ref={this.setRefbtnM2} className="bloc" onClick={()=>this.click(i+fator)} disabled={hit.indexOf(i) === 0 ? true : false}>
-						{this.criaRes(i+fator)}
-					</button>
-						
-				);
+						<div className="col-4">
+						<button ref={this.setRefbtnM2} className="bloc" onClick={()=>this.click(i+fator)} disabled={hit.indexOf(i) === 0 ? true : false}>
+							{this.criaRes(i+fator)}
+						</button>
+						</div>
+							
+					);
+			
 		}
-		//show.push(</div></div>);
 		return(
 				<div className="intro">
 					<div className="i-2">
-						{this.state.end === false ? <div className="game">
+
+						{this.state.end === false ? <div className="modif-3"><div className="game row">
 								{show}
-						</div> : 
+						</div></div> : 
 						<div className="end">
-						{/*<h3>Muito obrigado por ajudar o gatinho a encontrar seus amigos</h3>*/}
-						<div class="neons col-12">
-				         <h1><em>Muito obrigado por ajudar o gatinho a encontrar seus amigos</em></h1>
-				      </div>
-						<img src={require('../img/f4.gif')}/>
+							<div className="neons col-12">
+				         		<h1>Muito obrigado por ajudar o gatinho a encontrar seus amigos  <em className="heart" onClick={()=>this.coracao()}>♡</em></h1>
+							</div>
+							<img src={require('../img/hug.gif')}/>
+							{heart}
 						</div>}
+
 					</div>
 				</div>
 				)

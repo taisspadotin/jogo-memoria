@@ -1,6 +1,6 @@
 $base: #dca39f;
 /*$neon: darken($base, 20%);*/
-$neon: #48a5d1;
+$neon: red;
 @mixin center{
 	display: flex;
 	align-items: center;
@@ -37,7 +37,7 @@ $neon: #48a5d1;
 			width: 100%;
 			@include center;
 			img{
-				width: 200px;
+				width: 250px;
 			}
 		}
 		.btn{
@@ -70,6 +70,9 @@ $neon: #48a5d1;
 			min-height: 60vh;
 			border-radius: 5px;
 			padding: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			@media only screen and (max-width: 600px)  {
 				width: 90%;
 			}
@@ -77,12 +80,12 @@ $neon: #48a5d1;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				margin-top: 20px;
+				/*margin-top: 20px;*/
 				margin-bottom: auto;
 				.bloc{
 					background: #c0c0c0;
-					width: 50px;
-					height: 50px;
+					width: 100%;
+					height: 100%;
 					@include center;
 					border-radius: 5px;
 					border: 1px solid #898989;
@@ -102,15 +105,27 @@ $neon: #48a5d1;
 					
 				}
 				h1{
-				  color: #dfe1e5;
+				  color: #fff;
 				  font-size: 1.4rem;
 				  text-align: center;
 				  font-size: 1.8rem;
+				  /*-webkit-animation: glow 2s ease-in-out infinite alternate;
+				  -moz-animation: glow 2s ease-in-out infinite alternate;
+				  animation: glow 2s ease-in-out infinite alternate;*/
+
+				}
+				.heart{
+					color: #fff;
+				  font-size: 1.4rem;
+				  text-align: center;
+				  font-size: 1.8rem;
+				  font-weight: bold;
 				  -webkit-animation: glow 2s ease-in-out infinite alternate;
 				  -moz-animation: glow 2s ease-in-out infinite alternate;
 				  animation: glow 2s ease-in-out infinite alternate;
-				  
+				  cursor: pointer;
 				}
+
 				@keyframes glow {
 					from {
 					    color: #fff;
@@ -125,6 +140,18 @@ $neon: #48a5d1;
 				img{
 					width: 200px;
 					margin-top: 50px;
+				}
+
+				.coracoes{
+					position: absolute;
+					height: 300px;
+					width: 35%;
+					margin-top: 100px;
+					@media only screen and (max-width: 600px) {
+						height: 350px;
+						width: 90%;
+						margin-top: 55px;
+					}
 				}
 			}
 			
@@ -154,8 +181,45 @@ $neon: #48a5d1;
 flex-grow: 1;
 max-width: 100%;
 }
+.col-3{
+	max-width: 33.33%;	
+	flex-basis: 33.33%;
+	padding: 0;
+	height: 100px;
+	/*margin-bottom: 30px;*/
+
+	@media only screen and (max-width: 600px) {
+		height: 50px;
+	}
+}
+.col-2{
+	max-width: 50%;	
+	flex-basis: 50%;
+	padding: 0 0;
+	/*margin-bottom: 30px;*/
+}
+.col-4{
+	max-width: 25%;	
+	flex-basis: 25%;
+	padding: 0;
+	height: 100px;
+	/*margin-bottom: 30px;*/
+
+	@media only screen and (max-width: 600px) {
+		height: 50px;
+	}
+}
 .break {
   width: 100%;
   min-height: 1px;
   
+}
+.modif-3{
+	width: 50%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	@media only screen and (max-width: 600px)  {
+				width: 80%;
+
+	}
 }

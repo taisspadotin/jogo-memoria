@@ -28,7 +28,7 @@ export default class Game extends Component{
 		};
 
 	click = (i) =>{
-		const {game, fator} = this.state;
+		const {game, fator, rd} = this.state;
 		if(this.state.id === (i-fator) || (this.state.id-fator) === i){//caso tenha acertado
 			
 			let hit = this.state.hit;
@@ -38,13 +38,19 @@ export default class Game extends Component{
 
 
 			//alterando os que ja foram acertados
+			//console.log(rd);
+			//console.log(i);
+			
+
 			if(i >= fator){
 				this.btnM1[i-fator].style.background = '#555555';
 				this.btnM2[i-fator].style.background = '#555555';
+				//console.log(rd[i-fator]);
 			}
 			else{
 				this.btnM1[i].style.background = '#555555';
 				this.btnM2[i].style.background = '#555555';
+				console.log(i);
 			}
 
 			if(hit.length === (game.length*2)){ //A PESSOA ACERTOU TODAS
@@ -87,7 +93,7 @@ export default class Game extends Component{
 	}
 	
 	criaRes = (i) => {
-		let {id, hit, game, fator} = this.state;
+		let {id, hit, game, fator, rd} = this.state;
 
 		if(id === i)
 		{
@@ -132,9 +138,34 @@ export default class Game extends Component{
 				);
 		}
 		//Math.floor(Math.random() * 10 + 0)
-		//let rand = [];
+		let rand = [];
+		let i = rd[0];
+		let j = 0;
 		//console.log(this.state.rd);
-		for(let i=0; i<rd.length; i++){ 
+		/*for(let i=rd[j]; j<rd.length; j++){ 
+			show.push(
+						<div className="col-4">
+						<button ref={this.setRefbtnM2} name={i} className="bloc" onClick={()=>this.click(i+fator)} disabled={hit.indexOf(i) === 0 ? true : false}>
+							{this.criaRes(i+fator)}
+						</button>
+						</div>
+							
+					);
+			
+		}*/
+		/*for(let i=0; i<rd.length; i++){ 
+			show.push(
+						<div className="col-4">
+						<button ref={this.setRefbtnM2} name={rd[i]} className="bloc" onClick={()=>this.click(rd[i]+fator)} disabled={hit.indexOf(rd[i]) === 0 ? true : false}>
+							{this.criaRes(rd[i]+fator)}
+						</button>
+						</div>
+							
+					);
+			
+		}*/
+		
+		for(let i=0; i<size; i++){ 
 			show.push(
 						<div className="col-4">
 						<button ref={this.setRefbtnM2} className="bloc" onClick={()=>this.click(i+fator)} disabled={hit.indexOf(i) === 0 ? true : false}>

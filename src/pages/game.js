@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import './style.scss';
+import Menu from '../components/menu';
+
 
 export default class Game extends Component{
 	constructor(props){
@@ -237,6 +239,7 @@ return(
 						</div>}
 
 					</div>
+					<Menu/>
 				</div>
 				)
 	}

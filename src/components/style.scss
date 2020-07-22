@@ -1,0 +1,90 @@
+$primary: #dca39f;
+$secondary: #4f5784;
+$popUp: #e6e28d;
+@mixin center{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.menu{
+	background: none;
+	position: absolute;
+	right: 5px;
+	min-height: 40px;
+	bottom: 5px;
+	width: 50px;
+	@include center;
+	flex-direction: column;
+	border-radius: 25px;
+	z-index: 9999;
+	@media only screen and (max-width: 600px) {
+		bottom: 0;
+	}
+	.item{
+		height: 50px;
+		width: 50px;
+		@include center;
+		i{
+			color: darken($primary, 20%);
+			font-size: 3.2rem;
+			margin-left: 2px;
+		}
+	}
+}
+.main{
+	position: absolute;
+	background: red;
+	z-index: 999;
+	background: $secondary;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 30%;
+	min-height: 400px;
+	border-radius: 5px;
+	box-shadow: 44px -8px 300px 200px rgba(0,0,0,1);
+	transition-timing-function: ease-in-out;
+	transition-delay: 1s;
+	.header{
+		margin-top: 10px;
+		margin-bottom: 20px;
+		img{
+			width: 100px;
+		}
+	}
+	@media only screen and (max-width: 600px) {
+		width: 90%;
+	}
+	.btn-main{
+		width: 70%;
+		margin-bottom: 20px;
+		height: 40px;
+		background: darken($primary, 10%);
+		border: 0;
+		border-radius: 5px;
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+}
+
+
+.modal{
+	background: $popUp !important;
+	.header{
+		background: none !important;
+	}
+	.content{
+		background: none !important;	
+		font-weight: bold;
+		font-size: 1.4rem !important;
+		p{
+			font-weight: normal;
+			font-size: 1.2rem !important;	
+		}
+	}
+	.actions{
+		background: none !important;	
+	}
+}

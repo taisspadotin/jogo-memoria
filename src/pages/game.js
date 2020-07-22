@@ -24,11 +24,13 @@ export default class Game extends Component{
 			end: false,
 			fator: 10000,
 			heart: '',
-			rd: []
+			rd: [],
+			random: []
 		};
 
 	click = (i) =>{
-		const {game, fator, rd} = this.state;
+		const {game, fator, rd, random} = this.state;
+		
 		if(this.state.id === (i-fator) || (this.state.id-fator) === i){//caso tenha acertado
 			
 			let hit = this.state.hit;
@@ -37,27 +39,35 @@ export default class Game extends Component{
 			this.setState({hit});
 
 			let n = i;
+			let n1=0, n2=0;
+			for(let k=0; k<random.length; k++){
+				if(n1 === 0){
+					let j = i;
+					if(i >= fator){	j = i-fator;}
+						if(random[k] === j){
+							n1 = k;
+						}
+					
+				}
+				else{
+					let j = i;
+					if(i >= fator){	j = i-fator;}
+					
+					if(random[k] === j){
+						n2 = k;
+					}	
+				}
+				
+			}
+			
 			
 			if(i >= fator){
-				for(let j=0; j<rd.length; j++){
-					if(rd[j] === (i-fator)){
-						n = j;
-					}
-				}
-				this.btnM1[i-fator].style.background = '#555555';
-				this.btnM2[n].style.background = '#555555';
-
-
+				this.btnM1[n1].style.background = '#555555';
+				this.btnM1[n2].style.background = '#555555';
 			}
 			else{
-				for(let j=0; j<rd.length; j++){
-					if(rd[j] === i){
-						n = j;
-					}
-				}
-			
-				this.btnM1[i].style.background = '#555555';
-				this.btnM2[n].style.background = '#555555';
+				this.btnM1[n1].style.background = '#555555';
+				this.btnM1[n2].style.background = '#555555';
 			}
 
 			if(hit.length === (game.length*2)){ //A PESSOA ACERTOU TODAS
@@ -67,41 +77,65 @@ export default class Game extends Component{
 		}
 		
 		if(i<this.state.game.length){
-			
 			let img = <img src={game[i].path}/>;
 			let id = i;
 			this.setState({img, id});
 		}
 		else{
-
 			let v = (parseInt(i)-parseInt(fator));
+			
 			let img = <img src={game[v].path}/>;
 			let id = i;
 			this.setState({img, id});	
 		}
 		
 	}
+
+	randOrd = () => {
+		  return (Math.round(Math.random())-0.5);
+	}
 	
 	componentDidMount = () => {
-		const {fator, game} = this.state;
-		let rd = [];
+		const {game} = this.state;
 		let cont = [];
+		let cont2 = [];
 		let i=0
 		
 		while(i< game.length){
-			let j = Math.floor(Math.random() * game.length + 0); //gera num aleatorio de 0 ate o fator
-			//console.log(j);
-			//console.log(cont.indexOf(j));
+			let j = Math.floor(Math.random() * game.length + 0); //gera num aleatorio de 0 ate o tamanho do jogo
 			if(cont.indexOf(j) < 0){
 				cont.push(j);
 				i++;
 			}
 		}
 		this.setState({rd: cont});
+
+		i = 0;
+		while(i< game.length){
+			let j = Math.floor(Math.random() * game.length + 0); //gera num aleatorio de 0 ate o tamanho do jogo
+			if(cont2.indexOf(j) < 0){
+				cont2.push(j);
+				i++;
+			}
+		}
+		
+		
+		
+		let a = cont2;
+		let random = cont;
+		let size = game.length;
+
+		for(let j=0; j<size; j++){
+			a.push(random[j]);
+		}
+		random.sort(this.randOrd);
+		this.setState({random: cont2});
+		
 	}
 	
 	criaRes = (i) => {
 		let {id, hit, game, fator, rd} = this.state;
+
 
 		if(id === i)
 		{
@@ -118,13 +152,6 @@ export default class Game extends Component{
 				return game[i].img;
 			}
 		}
-		/*else if(hit.indexOf(rd[i]) === 0)
-		{
-			console.log('teste');
-			let v = i-fator;
-			console.log(v);
-				return game[v].img;
-		}*/
 							
 	}
 
@@ -138,55 +165,38 @@ export default class Game extends Component{
 	}
 
 	render(){
-		let {heart, game, id, fator, hit, rd} = this.state;
+		let {heart, game, id, fator, hit, rd, random} = this.state;
 		let show = [];
 		let size = game.length;
-		//console.log(hit);
-		
-
-		for(let i=0; i<size; i++){ 
-			show.push(
-					<div className="col-4" key={i}>
+		let arm = [];
+		let j =0;
+		for(let i=random[j]; j<random.length; j++){ 
+			i = random[j];
+			
+			let n = random[j]+fator;
+			
+			if(arm.indexOf(i) < 0){
+				show.push(
+					<div className="col-4" key={j}>
 						<button ref={this.setRefbtnM1} className="bloc" onClick={()=>this.click(i)} disabled={hit.indexOf(i) === 0 ? true : false}>
 							{this.criaRes(i)}
 						</button>
 					</div>	
 				);
-		}
-		//Math.floor(Math.random() * 10 + 0)
-		let rand = [];
-		let i = rd[0];
-		let j = 0;
-		//console.log(this.state.rd);
-		//console.log(this.state.game);
-		//console.log('sai');
-		for(let i=rd[j]; j<rd.length; j++){ 
-			i = rd[j];
-			let n = rd[j]+fator;
-			show.push(
-						<div className="col-4" key={j+fator}>
-						<button ref={this.setRefbtnM2} className="bloc" onClick={()=>this.click(n)} disabled={hit.indexOf(rd[j]) === 0 ? true : false}>
-							{this.criaRes(rd[j]+fator)}
+			}else{
+				show.push(
+						<div className="col-4" key={j}>
+						<button ref={this.setRefbtnM1} className="bloc" onClick={()=>this.click(n)} disabled={hit.indexOf(random[j]) === 0 ? true : false}>
+							{this.criaRes(n)}
 						</button>
 						</div>
 							
 					);
+			}
+			arm.push(i)
 			
-			//console.log(rd[j]);
 		}
-		
-		/*for(let i=0; i<size; i++){ 
-			show.push(
-						<div className="col-4">
-						<button ref={this.setRefbtnM2} className="bloc" onClick={()=>this.click(i+fator)} disabled={hit.indexOf(i) === 0 ? true : false}>
-							{this.criaRes(i+fator)}
-						</button>
-						</div>
-							
-					);
-			
-		}*/
-		return(
+return(
 				<div className="intro">
 					<div className="i-2">
 

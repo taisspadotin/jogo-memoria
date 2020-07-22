@@ -19,17 +19,17 @@ export default class Game extends Component{
 	state = {
 			img: '',
 			id: '', 
-			game: [{path: require('../img/cat2.png')}, {path: require('../img/cat3.png')}, {path: require('../img/cat4.png')}, {path: require('../img/cat5.png')}, {path: require('../img/cat6.png')}, {path: require('../img/cat7.png')}],
+			game: [{path: require('../img/cat2.png')}, {path: require('../img/cat3.png')}],
 			hit: [],
 			end: false,
 			fator: 10000,
-			heart: '',
 			rd: [],
-			random: []
+			random: [],
+			nivel: 1
 		};
 
 	click = (i) =>{
-		const {game, fator, rd, random} = this.state;
+		const {game, fator, rd, random, nivel} = this.state;
 		
 		if(this.state.id === (i-fator) || (this.state.id-fator) === i){//caso tenha acertado
 			
@@ -60,16 +60,9 @@ export default class Game extends Component{
 				
 			}
 			
+				this.btnM1[n1].style.background = '#555555';
+				this.btnM1[n2].style.background = '#555555';
 			
-			if(i >= fator){
-				this.btnM1[n1].style.background = '#555555';
-				this.btnM1[n2].style.background = '#555555';
-			}
-			else{
-				this.btnM1[n1].style.background = '#555555';
-				this.btnM1[n2].style.background = '#555555';
-			}
-
 			if(hit.length === (game.length*2)){ //A PESSOA ACERTOU TODAS
 				this.setState({end: true});
 			}
@@ -96,11 +89,37 @@ export default class Game extends Component{
 	}
 	
 	componentDidMount = () => {
-		const {game} = this.state;
+		let {game} = this.state;
+		let nivel = localStorage.getItem("nivel") === null ? 1 : localStorage.getItem("nivel");
+
 		let cont = [];
 		let cont2 = [];
-		let i=0
+		let i = 0;
+		console.log(nivel);
+		nivel = parseInt(nivel);
+		if(nivel >= 2){
+			game.push({path: require('../img/cat4.png')});
+			game.push({path: require('../img/cat5.png')});
+			this.setState({game});
 		
+		}
+		if(nivel >= 3){
+			game.push({path: require('../img/cat6.png')});
+			game.push({path: require('../img/cat7.png')});
+			game.push({path: require('../img/cat8.png')});
+			game.push({path: require('../img/cat9.png')});
+			this.setState({game});
+		
+		}
+		if(nivel >= 4){
+			game.push({path: require('../img/cat10.png')});
+			game.push({path: require('../img/cat11.png')});
+			game.push({path: require('../img/cat12.png')});
+			game.push({path: require('../img/cat13.png')});
+			this.setState({game});
+		//	console.log(game);
+		
+		}
 		while(i< game.length){
 			let j = Math.floor(Math.random() * game.length + 0); //gera num aleatorio de 0 ate o tamanho do jogo
 			if(cont.indexOf(j) < 0){
@@ -130,7 +149,7 @@ export default class Game extends Component{
 		}
 		random.sort(this.randOrd);
 		this.setState({random: cont2});
-		
+		this.setState({nivel})
 	}
 	
 	criaRes = (i) => {
@@ -155,17 +174,21 @@ export default class Game extends Component{
 							
 	}
 
-	coracao = () => {
-		if(this.state.heart !== ''){
-			this.setState({heart: ''});
-		}
-		else{
-			this.setState({heart: <img className="coracoes" src={require('../img/coracoes.gif')}/>});
-		}	
+	nextLevel = () => {
+		let {nivel, game} = this.state;
+		nivel = (parseInt(nivel) + 1);
+		this.setState({nivel});
+
+		localStorage.removeItem("nivel");		
+		localStorage.setItem("nivel", nivel);
+
+		this.setState({end: false});
+		document.location.reload(true);
+
 	}
 
 	render(){
-		let {heart, game, id, fator, hit, rd, random} = this.state;
+		let {game, id, fator, hit, rd, random} = this.state;
 		let show = [];
 		let size = game.length;
 		let arm = [];
@@ -205,10 +228,12 @@ return(
 						</div></div> : 
 						<div className="end">
 							<div className="neons col-12">
-				         		<h1>Muito obrigado por ajudar o gatinho a encontrar seus amigos  <em className="heart" onClick={()=>this.coracao()}>♡</em></h1>
+								<h1>Nível {this.state.nivel} concluído com sucesso!</h1>
+				         		<h2>Muito obrigado por ajudar o gatinho a encontrar seus amigos  <em className="heart">♡</em></h2>
 							</div>
 							<img src={require('../img/hug.gif')}/>
-							{heart}
+							<button className="btn" onClick={()=>this.nextLevel()}>Continuar</button>
+							<br/><br/>
 						</div>}
 
 					</div>

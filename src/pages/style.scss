@@ -40,28 +40,7 @@ $neon: red;
 				width: 250px;
 			}
 		}
-		.btn{
-			border-radius: 5px;
-			border: 0;
-			background: darken($base, 20%);
-			color: #fff;
-			min-height: 40px;
-			min-width: 150px;
-			font-size: 1.1rem;
-			/*border: 2px solid darken($base, 40%);*/
-			cursor: pointer;
-			width: 90%;
-			
-
-			&:hover{
-				/*border: 2px solid darken($base, 25%);*/
-				background: darken($base, 30%);
-				color: #fff;
-			
-			}
-
-			
-		}
+		
 
 	}
 	.i-2{
@@ -109,13 +88,22 @@ $neon: red;
 				  font-size: 1.4rem;
 				  text-align: center;
 				  font-size: 1.8rem;
-				  /*-webkit-animation: glow 2s ease-in-out infinite alternate;
-				  -moz-animation: glow 2s ease-in-out infinite alternate;
-				  animation: glow 2s ease-in-out infinite alternate;*/
-
+				  margin-bottom: 5px;
+				}
+				
+				h2{
+				  color: #fff;
+				  font-size: 1.2rem;
+				  text-align: center;
+				  font-weight: 400;
+				  margin-top: 0;
+				}
+				.btn{
+					margin-bottom: 5px;
+					margin-top: 5px;
 				}
 				.heart{
-					color: #fff;
+				  color: #fff;
 				  font-size: 1.4rem;
 				  text-align: center;
 				  font-size: 1.8rem;
@@ -123,7 +111,6 @@ $neon: red;
 				  -webkit-animation: glow 2s ease-in-out infinite alternate;
 				  -moz-animation: glow 2s ease-in-out infinite alternate;
 				  animation: glow 2s ease-in-out infinite alternate;
-				  cursor: pointer;
 				}
 
 				@keyframes glow {
@@ -223,3 +210,26 @@ max-width: 100%;
 
 	}
 }
+
+.btn{
+			border-radius: 5px;
+			border: 0;
+			background: darken($base, 20%);
+			color: #fff;
+			min-height: 40px;
+			min-width: 150px;
+			font-size: 1.1rem;
+			/*border: 2px solid darken($base, 40%);*/
+			cursor: pointer;
+			width: 90%;
+			
+
+			&:hover{
+				/*border: 2px solid darken($base, 25%);*/
+				background: darken($base, 30%);
+				color: #fff;
+			
+			}
+
+			
+		}

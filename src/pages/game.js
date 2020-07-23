@@ -62,8 +62,14 @@ export default class Game extends Component{
 				
 			}
 			
-				this.btnM1[n1].style.background = '#555555';
-				this.btnM1[n2].style.background = '#555555';
+				//this.btnM1[n1].style.background = '#555555';
+				//this.btnM1[n2].style.background = '#555555';
+				//bloc-selected
+				this.btnM1[n1].className = 'bloc-selected';
+				this.btnM1[n2].className = 'bloc-selected';
+				this.btnM1[n1].disabled = true;
+				this.btnM1[n2].disabled = true;
+					
 			
 			if(hit.length === (game.length*2)){ //A PESSOA ACERTOU TODAS
 				this.setState({end: true});
@@ -97,7 +103,7 @@ export default class Game extends Component{
 		let cont = [];
 		let cont2 = [];
 		let i = 0;
-		console.log(nivel);
+		//console.log(nivel);
 		nivel = parseInt(nivel);
 		if(nivel >= 2){
 			game.push({path: require('../img/cat4.png')});
@@ -108,18 +114,19 @@ export default class Game extends Component{
 		if(nivel >= 3){
 			game.push({path: require('../img/cat6.png')});
 			game.push({path: require('../img/cat7.png')});
+			this.setState({game});
+		
+		}
+		if(nivel >= 4){
 			game.push({path: require('../img/cat8.png')});
 			game.push({path: require('../img/cat9.png')});
 			this.setState({game});
 		
 		}
-		if(nivel >= 4){
+		if(nivel >= 5){
 			game.push({path: require('../img/cat10.png')});
 			game.push({path: require('../img/cat11.png')});
-			game.push({path: require('../img/cat12.png')});
-			game.push({path: require('../img/cat13.png')});
 			this.setState({game});
-		//	console.log(game);
 		
 		}
 		while(i< game.length){
@@ -190,11 +197,28 @@ export default class Game extends Component{
 	}
 
 	render(){
-		let {game, id, fator, hit, rd, random} = this.state;
+		let {game, id, fator, hit, rd, random, nivel} = this.state;
 		let show = [];
 		let size = game.length;
 		let arm = [];
 		let j =0;
+		let col = game.length;
+		let sz = nivel === 1 ? 1 : 3;
+		if(size%4 === 0 || size%3 === 0){
+			col = 4;
+		}
+		
+		if(size >= 10){
+			if(size%3 === 0){
+				col = 6;
+			}
+			else if(size%5 === 0){
+				col = 5;
+			}	
+			sz = 4;
+		}
+		
+
 		for(let i=random[j]; j<random.length; j++){ 
 			i = random[j];
 			
@@ -202,16 +226,16 @@ export default class Game extends Component{
 			
 			if(arm.indexOf(i) < 0){
 				show.push(
-					<div className="col-4" key={j}>
-						<button ref={this.setRefbtnM1} className="bloc" onClick={()=>this.click(i)} disabled={hit.indexOf(i) === 0 ? true : false}>
+					<div className={"col-"+col} key={j}>
+						<button ref={this.setRefbtnM1} className="bloc" onClick={()=>this.click(i)}>
 							{this.criaRes(i)}
 						</button>
 					</div>	
 				);
 			}else{
 				show.push(
-						<div className="col-4" key={j}>
-						<button ref={this.setRefbtnM1} className="bloc" onClick={()=>this.click(n)} disabled={hit.indexOf(random[j]) === 0 ? true : false}>
+						<div className={"col-"+col} key={j}>
+						<button ref={this.setRefbtnM1} className="bloc" onClick={()=>this.click(n)}>
 							{this.criaRes(n)}
 						</button>
 						</div>
@@ -225,7 +249,8 @@ return(
 				<div className="intro">
 					<div className="i-2">
 
-						{this.state.end === false ? <div className="modif-3"><div className="game row">
+						{this.state.end === false ? <div className={"modif-"+sz}>
+						<div className="game row">
 								{show}
 						</div></div> : 
 						<div className="end">

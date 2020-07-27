@@ -66,6 +66,23 @@ $popUp: #e6e28d;
 		color: #fff;
 		text-transform: uppercase;
 		font-weight: bold;
+		cursor: pointer;
+		&:hover{
+			background: darken($primary, 15%);
+		}
+	}
+	.op{
+		background: darken($primary, 25%);
+		width: 30px;
+		height: 30px;
+		color: #fff;
+		margin: 0;
+		border-radius: 5px;
+		cursor: pointer;
+		&:hover{
+			background: darken($primary, 30%);
+		}
+		padding-top: 5px;
 	}
 }
 

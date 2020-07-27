@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import './style.scss';
 import {Icon, Popup, Confirm, Modal, Button} from 'semantic-ui-react';
+import sound from './sound.mp3';
 
 export default class Menu extends Component{
 	constructor(props){
@@ -10,15 +11,18 @@ export default class Menu extends Component{
 			this.menu.push(element);
 			
 		}
+		this.audio = new Audio(sound);
 	}
 	state = {
 		show: false,
 		open: false,
-		openInstructions: false 
+		openInstructions: false,
+		music: true
 	}
 
 	showMenu = () => {
 		const {show} = this.state;
+		
 		if(show){
 			this.setState({show: false});	
 		}
@@ -26,6 +30,21 @@ export default class Menu extends Component{
 			this.setState({show: true});
 		}
 	}
+	playSound = (audio) => {
+		const playedPromise = audio.play();
+		if (playedPromise) {
+		        playedPromise.catch((e) => {
+		            if (e.name === 'NotAllowedError' ||
+		                e.name === 'NotSupportedError') {
+		                //console.log(e.name);
+		            }
+		        });
+		    }
+	}
+	pauseSound = (audio) => {
+		const playedPromise = audio.pause();
+	}
+
 	newGame = () => {
 		//confirme
 		localStorage.removeItem("nivel");		
@@ -40,12 +59,33 @@ export default class Menu extends Component{
   	openInstructions = () => this.setState({ openInstructions: true })
   	closeInstructions = () => this.setState({ openInstructions: false })
 
+  	setMusic = () => {
+  		const {music} = this.state;
+  		if(music){
+  			this.setState({ music: false });
+
+			this.pauseSound(this.audio);
+  		}
+  		else{
+  			this.setState({ music: true });
+
+			this.playSound(this.audio);
+  		}
+  		
+  	}
+  	
+  	componentDidMount = () => {
+  		
+		this.playSound(this.audio);
+		
+  	}
+
 	render(){
-		let {show} = this.state;
+		let {show, music} = this.state;
 		let content = [];
 		if(show){
 			content.push(
-				<div ref={this.setRefMenu} className="main">
+				<div ref={this.setRefMenu} className="main" >
 					<div className="header">
 						<img src={require('../img/f2.gif')}/>
 					</div>
@@ -58,6 +98,9 @@ export default class Menu extends Component{
 					<button className="btn-main" onClick={this.open}>
 						<Icon name="undo"/> Reiniciar
 					</button>
+					<div>
+						<Icon className="op" name={music === true ? "volume off": "volume up"} onClick={()=>this.setMusic()} title={music === true ? "Desligar música": "Ligar música"}/>
+					</div>
 
 				</div>);
 		}

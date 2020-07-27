@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import './style.scss';
 import Menu from '../components/menu';
-
+import soundHit from './hit.mp3';
 
 export default class Game extends Component{
 	constructor(props){
@@ -17,6 +17,7 @@ export default class Game extends Component{
 			this.btnM2.push(element);
 			
 		}
+		this.audioHit = new Audio(soundHit);
 	}
 	state = {
 			img: '',
@@ -35,6 +36,16 @@ export default class Game extends Component{
 		
 		if(this.state.id === (i-fator) || (this.state.id-fator) === i){//caso tenha acertado
 			
+			//SOM DE ACERTO
+			const playedPromise = this.audioHit.play();
+			if (playedPromise) {
+		        playedPromise.catch((e) => {
+		            if (e.name === 'NotAllowedError' ||
+		                e.name === 'NotSupportedError') {
+		                //console.log(e.name);
+		            }
+		        });
+		    }
 			let hit = this.state.hit;
 			hit.push(this.state.id);
 			hit.push(i);
@@ -96,6 +107,8 @@ export default class Game extends Component{
 		  return (Math.round(Math.random())-0.5);
 	}
 	
+	
+	
 	componentDidMount = () => {
 		let {game} = this.state;
 		let nivel = localStorage.getItem("nivel") === null ? 1 : localStorage.getItem("nivel");
@@ -103,7 +116,8 @@ export default class Game extends Component{
 		let cont = [];
 		let cont2 = [];
 		let i = 0;
-		//console.log(nivel);
+
+		
 		nivel = parseInt(nivel);
 		if(nivel >= 2){
 			game.push({path: require('../img/cat4.png')});
@@ -207,7 +221,6 @@ export default class Game extends Component{
 		if(size%4 === 0 || size%3 === 0){
 			col = 4;
 		}
-		
 		if(size >= 10){
 			if(size%3 === 0){
 				col = 6;
@@ -248,6 +261,7 @@ export default class Game extends Component{
 return(
 				<div className="intro">
 					<div className="i-2">
+		
 
 						{this.state.end === false ? <div className={"modif-"+sz}>
 						<div className="game row">

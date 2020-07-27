@@ -30,6 +30,7 @@ export default class Game extends Component{
 			rd: [],
 			random: [],
 			nivel: 1,
+			endGame: false
 		};
 
 	click = (i) =>{
@@ -118,7 +119,6 @@ export default class Game extends Component{
 	componentDidMount = () => {
 		let {game} = this.state;
 		let nivel = localStorage.getItem("nivel") === null ? 1 : localStorage.getItem("nivel");
-
 		let cont = [];
 		let cont2 = [];
 		let i = 0;
@@ -148,6 +148,17 @@ export default class Game extends Component{
 			game.push({path: require('../img/cat11.png')});
 			this.setState({game});
 		
+		}
+		if(nivel >= 6){
+			game.push({path: require('../img/cat12.png')});
+			game.push({path: require('../img/cat13.png')});
+			this.setState({game});
+		}
+		if(nivel >= 7){
+			game.push({path: require('../img/cat14.png')});
+			game.push({path: require('../img/cat15.png')});
+			this.setState({game});
+			this.setState({endGame: true});
 		}
 		while(i< game.length){
 			let j = Math.floor(Math.random() * game.length + 0); //gera num aleatorio de 0 ate o tamanho do jogo
@@ -224,6 +235,7 @@ export default class Game extends Component{
 		let j =0;
 		let col = game.length;
 		let sz = nivel === 1 ? 1 : 3;
+		//console.log(size);
 		if(size%4 === 0 || size%3 === 0){
 			col = 4;
 		}
@@ -233,6 +245,9 @@ export default class Game extends Component{
 			}
 			else if(size%5 === 0){
 				col = 5;
+			}
+			else if(size%7 === 0){
+				col = 7;
 			}	
 			sz = 4;
 		}
@@ -274,13 +289,28 @@ return(
 								{show}
 						</div></div> : 
 						<div className="end">
-							<div className="neons col-12">
-								<h1>Nível {this.state.nivel} concluído com sucesso!</h1>
-				         		<h2>Muito obrigado por ajudar o gatinho a encontrar seus amigos  <em className="heart">♡</em></h2>
+							{this.state.endGame === false ?
+							<div className="end">
+								<div className="neons col-12">
+									
+									<h1>Nível {this.state.nivel} concluído com sucesso!</h1>
+					         		<h2>Muito obrigado por ajudar o gatinho a encontrar seus amigos  <em className="heart">♡</em></h2>
+								</div>
+								<img src={require('../img/hug.gif')}/>
+								<button className="btn" onClick={()=>this.nextLevel()}>Continuar</button>
+								<br/><br/>
 							</div>
-							<img src={require('../img/hug.gif')}/>
-							<button className="btn" onClick={()=>this.nextLevel()}>Continuar</button>
-							<br/><br/>
+							
+							:
+							<div  className="end">
+								<h1><em className="heart">Parabéns</em>
+								<br/>
+									Você chegou ao final do jogo!!!
+								</h1>
+								<br/>
+								<img src={require('../img/f1.gif')}/>
+
+							</div>}
 						</div>}
 
 					</div>

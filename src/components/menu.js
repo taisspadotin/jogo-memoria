@@ -94,6 +94,7 @@ export default class Menu extends Component{
   	
   	componentDidMount = () => {
   		let music = getMusic();
+  		//console.log(music);
 		if(music !== 'false'){
 			this.playMusic(this.audio);
 			this.setState({music: true});
@@ -106,6 +107,7 @@ export default class Menu extends Component{
 		let sound = getSound();
 		if(sound !== 'false'){
 			this.setState({sound: true});
+		
 		}
 		else{
 			this.setState({sound: false});	
@@ -116,9 +118,9 @@ export default class Menu extends Component{
 
 	render(){
 		let {show, music, sound} = this.state;
-		let content = [];
+		let content = '';
 		if(show){
-			content.push(
+			content =
 				<div ref={this.setRefMenu} className="main" >
 					<div className="header">
 						<img src={require('../img/f2.gif')}/>
@@ -138,7 +140,7 @@ export default class Menu extends Component{
 						<Icon className="op" name={sound === true ? "pause": "music"} onClick={()=>this.setSound()} title={sound === true ? "Desligar som": "Ligar som"}/>
 					</div>
 
-				</div>);
+				</div>;
 		}
 		return(
 				<>

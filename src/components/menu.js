@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import './style.scss';
 import {Icon, Popup, Confirm, Modal, Button} from 'semantic-ui-react';
 import sound from './sound.mp3';
-import { saveMusic, saveSound, getMusic } from "../services/music";
+import { saveMusic, saveSound, getMusic, getSound } from "../services/music";
 
 export default class Menu extends Component{
 	constructor(props){
@@ -18,7 +18,8 @@ export default class Menu extends Component{
 		show: false,
 		open: false,
 		openInstructions: false,
-		music: true
+		music: true,
+		sound: true
 	}
 
 	showMenu = () => {
@@ -31,7 +32,7 @@ export default class Menu extends Component{
 			this.setState({show: true});
 		}
 	}
-	playSound = (audio) => {
+	playMusic = (audio) => {
 		const playedPromise = audio.play();
 		if (playedPromise) {
 		        playedPromise.catch((e) => {
@@ -42,10 +43,11 @@ export default class Menu extends Component{
 		        });
 		    }
 	}
-	pauseSound = (audio) => {
+	pauseMusic = (audio) => {
 		const playedPromise = audio.pause();
 	}
 
+	
 	newGame = () => {
 		//confirme
 		localStorage.removeItem("nivel");		
@@ -65,24 +67,55 @@ export default class Menu extends Component{
   		if(music){
   			this.setState({ music: false });
   			saveMusic(false);
-			this.pauseSound(this.audio);
+			this.pauseMusic(this.audio);
   		}
   		else{
   			this.setState({ music: true });
   			saveMusic(true);
-			this.playSound(this.audio);
+			this.playMusic(this.audio);
+  		}
+  		
+  	}
+
+  	setSound = () => {
+  		const {sound} = this.state;
+  		if(sound){
+  			this.setState({ sound: false });
+  			saveSound(false);
+			
+  		}
+  		else{
+  			this.setState({ sound: true });
+  			saveSound(true);
+			
   		}
   		
   	}
   	
   	componentDidMount = () => {
   		let music = getMusic();
-		if(music === 'true'){this.playSound(this.audio);}
+		if(music !== 'false'){
+			this.playMusic(this.audio);
+			this.setState({music: true});
+		}
+		else{
+			this.setState({music: false});	
+		}
+
+
+		let sound = getSound();
+		if(sound !== 'false'){
+			this.setState({sound: true});
+		}
+		else{
+			this.setState({sound: false});	
+		}		
+
 		
   	}
 
 	render(){
-		let {show, music} = this.state;
+		let {show, music, sound} = this.state;
 		let content = [];
 		if(show){
 			content.push(
@@ -101,6 +134,8 @@ export default class Menu extends Component{
 					</button>
 					<div>
 						<Icon className="op" name={music === true ? "volume off": "volume up"} onClick={()=>this.setMusic()} title={music === true ? "Desligar música": "Ligar música"}/>
+
+						<Icon className="op" name={sound === true ? "pause": "music"} onClick={()=>this.setSound()} title={sound === true ? "Desligar som": "Ligar som"}/>
 					</div>
 
 				</div>);

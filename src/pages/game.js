@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import './style.scss';
 import Menu from '../components/menu';
 import soundHit from './hit.mp3';
+import { getSound } from "../services/music";
 
 export default class Game extends Component{
 	constructor(props){
@@ -37,15 +38,20 @@ export default class Game extends Component{
 		if(this.state.id === (i-fator) || (this.state.id-fator) === i){//caso tenha acertado
 			
 			//SOM DE ACERTO
-			const playedPromise = this.audioHit.play();
-			if (playedPromise) {
-		        playedPromise.catch((e) => {
-		            if (e.name === 'NotAllowedError' ||
-		                e.name === 'NotSupportedError') {
-		                //console.log(e.name);
-		            }
-		        });
-		    }
+			let sound = getSound();
+			//console.log(sound);
+			if(sound !== 'false'){
+				const playedPromise = this.audioHit.play();
+				if (playedPromise) {
+			        playedPromise.catch((e) => {
+			            if (e.name === 'NotAllowedError' ||
+			                e.name === 'NotSupportedError') {
+			                //console.log(e.name);
+			            }
+			        });
+			    }
+			}
+			
 			let hit = this.state.hit;
 			hit.push(this.state.id);
 			hit.push(i);

@@ -28,7 +28,7 @@ export default class Game extends Component{
 			fator: 10000,
 			rd: [],
 			random: [],
-			nivel: 1
+			nivel: 1,
 		};
 
 	click = (i) =>{

@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import './style.scss';
 import {Icon, Popup, Confirm, Modal, Button} from 'semantic-ui-react';
 import sound from './sound.mp3';
+import { saveMusic, saveSound, getMusic } from "../services/music";
 
 export default class Menu extends Component{
 	constructor(props){
@@ -63,20 +64,21 @@ export default class Menu extends Component{
   		const {music} = this.state;
   		if(music){
   			this.setState({ music: false });
-
+  			saveMusic(false);
 			this.pauseSound(this.audio);
   		}
   		else{
   			this.setState({ music: true });
-
+  			saveMusic(true);
 			this.playSound(this.audio);
   		}
   		
   	}
   	
   	componentDidMount = () => {
-  		
-		this.playSound(this.audio);
+  		let music = getMusic();
+  		//console.log(music);
+		if(music === 'true'){this.playSound(this.audio);}
 		
   	}
 

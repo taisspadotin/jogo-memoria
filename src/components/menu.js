@@ -77,7 +77,6 @@ export default class Menu extends Component{
   	
   	componentDidMount = () => {
   		let music = getMusic();
-  		//console.log(music);
 		if(music === 'true'){this.playSound(this.audio);}
 		
   	}
